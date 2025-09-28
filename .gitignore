@@ -1,0 +1,39 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files and logs
+*.log
+*.tmp
+tmp/
+*.pid
+
+# PDF / debug files (auto-generated)
+debug-html-*.html
+debug-pdf-*.pdf
+
+# Docker
+docker-compose.override.yml
+*.local
+*.env
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Optional: compiled files (if any)
+dist/
+build/
