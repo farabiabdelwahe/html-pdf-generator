@@ -1,5 +1,4 @@
 version: "3.9"
-
 services:
   html-to-pdf:
     build: .
@@ -8,7 +7,7 @@ services:
       - API_KEY=${API_KEY}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.html-to-pdf.rule=Host(`cv-gpt.cloud`, `www.cv-gpt.cloud`) && PathPrefix(`/generate-pdf`)"
+      - "traefik.http.routers.html-to-pdf.rule=(Host(`cv-gpt.cloud`) || Host(`www.cv-gpt.cloud`)) && PathPrefix(`/generate-pdf`)"
       - "traefik.http.routers.html-to-pdf.entrypoints=websecure"
       - "traefik.http.routers.html-to-pdf.tls.certresolver=myresolver"
       - "traefik.http.services.html-to-pdf.loadbalancer.server.port=3000"
