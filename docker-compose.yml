@@ -3,6 +3,9 @@ services:
   html-to-pdf:
     build: .
     container_name: html-to-pdf
+    shm_size: '256m'  # Increase shared memory for Chrome
+    tmpfs:
+      - /tmp:size=256M  # Dedicated tmpfs for temp files
     environment:
       - API_KEY=${API_KEY}
     labels:

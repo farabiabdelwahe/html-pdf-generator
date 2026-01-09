@@ -29,16 +29,25 @@ const generatePdfWithChromium = async (html, outputPdfPath) => {
     execFile(
       CHROME_PATH, // or "google-chrome" depending on Docker image
       [
-        "--headless",
+        "--headless=new",
         "--no-pdf-header-footer",
         "--disable-gpu",
+        "--disable-software-rasterizer",
         "--no-sandbox",
+        "--disable-dev-shm-usage",  // Use /tmp instead of /dev/shm
+        "--disable-setuid-sandbox",
+        "--single-process",         // Prevents renderer crashes
+        "--disable-extensions",
+        "--disable-background-networking",
+        "--disable-sync",
+        "--no-first-run",
+        "--no-zygote",              // Prevents zygote process issues
         `--print-to-pdf=${outputPdfPath}`,
         tmpHtmlPath
       ],
       async (err) => {
         // Remove temporary HTML file
-        await fs.unlink(tmpHtmlPath).catch(() => {});
+        await fs.unlink(tmpHtmlPath).catch(() => { });
         if (err) return reject(err);
         resolve();
       }
@@ -93,7 +102,7 @@ app.post("/generate-pdf", async (req, res) => {
     res.status(500).json({ error: "PDF generation failed", message: err.message });
   } finally {
     // Clean up files
-    if (pdfPath) await fs.unlink(pdfPath).catch(() => {});
+    if (pdfPath) await fs.unlink(pdfPath).catch(() => { });
     console.log(`[${requestId}] Temporary files cleaned`);
   }
 });
